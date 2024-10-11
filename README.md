@@ -19,14 +19,15 @@ classDiagram
   class User {
     -String name
     -Conta conta
-    -Cartao card
+    -String email
+    -String cpf
   }
 
   class Conta {
     -String number
     -String agency
-    -Number saldo
-    -Number limit
+    -Cartao card
+    -Double saldo
     -Movimentacao[] movimentacoes
   }
   
@@ -34,27 +35,27 @@ classDiagram
     -String descricao
     -Conta destinatario
     -Conta remetente
-    -Number valor
+    -Double valor
     -DateTime data
   }
-
-  class TipoMovimentacao {
+  class TipoCartao {
     <<enumeration>>
+    DEBITO
     CREDITO
-    DEBITO 
   }
 
   class Cartao {
     -String number
-    -Number limite
-    -TipoMovimentacao tipo
+    -Double limite
+    -TipoCartao tipo
   }
 
 
 
   User "1" *-- "1" Conta
-  User "1" *-- "1" Cartao
+  Conta "1" *-- "1" Cartao
   Conta "1" *-- "0..*" Movimentacao
+  Cartao --> TipoCartao : tipo
 ```
 
 ## Documentação da API (Swagger)

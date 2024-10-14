@@ -26,11 +26,13 @@ public class User {
 
     private String name;
 
+    private String cpf;
+
+    private String email;
+
     @OneToOne(cascade = CascadeType.ALL)
     private Conta conta;
     
-    @OneToOne(cascade = CascadeType.ALL)
-    private Card card;
 
 
 

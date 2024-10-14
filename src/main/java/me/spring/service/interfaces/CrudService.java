@@ -1,4 +1,4 @@
-package me.spring.service;
+package me.spring.service.interfaces;
 
 import java.util.List;
 

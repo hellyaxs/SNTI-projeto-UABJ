@@ -10,9 +10,11 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -20,6 +22,7 @@ import lombok.Setter;
 @Entity(name = "tb_account")
 @Getter
 @Setter
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class Conta {
@@ -40,10 +43,11 @@ public class Conta {
     private BigDecimal limite;
 
 
-    @OneToOne(mappedBy = "cartao_id")
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Card card;
 
-    @OneToMany(mappedBy = "Movimentacao_id", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany
+    @JoinColumn(name = "conta")
     private List<Movimentacao> movimentacoes;
 
 

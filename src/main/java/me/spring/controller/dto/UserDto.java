@@ -13,19 +13,18 @@ public record UserDto(
         ) {
 
     public UserDto(User model) {
-        this(
-                model.getId(),
+        this(   model.getId(),
                 model.getName(),
                 model.getCpf(),
                 model.getEmail(),
                 ofNullable(model.getConta()).map(AccountDto::new).orElse(null)
-            
         );
     }
 
     public User toModel() {
         User model = new User();
-        model.setId(this.id);
+        model.setCpf(this.cpf);
+        model.setEmail(this.email);
         model.setName(this.name);
         model.setConta(ofNullable(this.account).map(AccountDto::toModel).orElse(null));
         return model;

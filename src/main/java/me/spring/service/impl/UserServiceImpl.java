@@ -1,17 +1,22 @@
 package me.spring.service.impl;
 
+import static java.util.Optional.ofNullable;
+
+import java.lang.StackWalker.Option;
+import java.math.BigDecimal;
+import java.util.List;
+import java.util.Random;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import me.spring.domain.model.Conta;
 import me.spring.domain.model.User;
 import me.spring.domain.repository.UserRepository;
 import me.spring.service.exception.BusinessException;
 import me.spring.service.exception.NotFoundException;
 import me.spring.service.interfaces.UserService;
-
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
-
-import static java.util.Optional.ofNullable;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -36,9 +41,15 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public User create(User userToCreate) {
         ofNullable(userToCreate).orElseThrow(() -> new BusinessException("User to create must not be null."));
-        ofNullable(userToCreate.getConta()).orElseThrow(() -> new BusinessException("User account must not be null."));
+        userToCreate.setConta(Conta.builder()
+        .agency(new Random().nextInt(9999) + "")
+        .number(new Random().nextInt(999999) + "")
+        .limite(BigDecimal.ZERO)
+        .saldo(BigDecimal.ZERO)
+        .card(null)
+        .movimentacoes(null)
+        .build());
        
-
         
         if (userRepository.existsByContaNumber(userToCreate.getConta().getNumber())) {
             throw new BusinessException("This account number already exists.");
@@ -49,14 +60,10 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public User update(Long id, User userToUpdate) {
         User dbUser = this.findById(id);
-        if (!dbUser.getId().equals(userToUpdate.getId())) {
-            throw new BusinessException("Update IDs must be the same.");
-        }
-
-        dbUser.setName(userToUpdate.getName());
-        dbUser.setConta(userToUpdate.getConta());
- 
-
+        ofNullable(userToUpdate.getName()).ifPresent(dbUser::setName);
+        ofNullable(userToUpdate.getCpf()).ifPresent(dbUser::setCpf);
+        ofNullable(userToUpdate.getEmail()).ifPresent(dbUser::setEmail);
+        ofNullable(userToUpdate.getConta()).ifPresent(dbUser::setConta);
         return this.userRepository.save(dbUser);
     }
 

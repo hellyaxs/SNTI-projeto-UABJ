@@ -10,5 +10,4 @@ public interface UserRepository extends JpaRepository<User, Long> {
     
     boolean existsByContaNumber(String number);
 
-    boolean existsByCardNumber(String number);
 }

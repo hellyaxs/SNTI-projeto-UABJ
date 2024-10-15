@@ -7,7 +7,8 @@ import java.math.BigDecimal;
 public record AccountDto(String number, String agency, BigDecimal balance, BigDecimal limit) {
 
     public AccountDto(Conta model) {
-        this(model.getNumber(), model.getAgency(), model.getSaldo(), model.getLimite());
+        this(model.getNumber(), model.getAgency(),
+         model.getSaldo(), model.getLimite());
     }
 
     public Conta toModel() {

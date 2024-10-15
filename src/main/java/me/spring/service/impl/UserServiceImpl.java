@@ -1,13 +1,10 @@
 package me.spring.service.impl;
 
 import static java.util.Optional.ofNullable;
-
-import java.lang.StackWalker.Option;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Random;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -46,8 +43,6 @@ public class UserServiceImpl implements UserService {
         .number(new Random().nextInt(999999) + "")
         .limite(BigDecimal.ZERO)
         .saldo(BigDecimal.ZERO)
-        .card(null)
-        .movimentacoes(null)
         .build());
        
         

@@ -33,7 +33,4 @@ public class User {
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Conta conta;
     
-
-
-
 }

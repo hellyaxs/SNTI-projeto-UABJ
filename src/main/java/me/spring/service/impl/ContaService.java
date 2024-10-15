@@ -18,9 +18,9 @@ public class ContaService {
 
 
     @Transactional
-    public void trasfeir(Long remetenteId, Long destinatarioId, BigDecimal valor) {
-        var remtente = contaRepository.findById(remetenteId).orElseThrow();
-        var destinatario = contaRepository.findById(destinatarioId).orElseThrow();
+    public void trasfeir(String remetenteId, String destinatarioId, BigDecimal valor) {
+        var remtente = contaRepository.findByNumber(remetenteId);
+        var destinatario = contaRepository.findByNumber(destinatarioId);
 
         if (remtente.getSaldo().compareTo(valor) <= 0) {
             throw new UnsupportedOperationException("Saldo insuficiente");
@@ -33,6 +33,15 @@ public class ContaService {
         contaRepository.save(remtente);
         contaRepository.save(destinatario);
     }
+
+    public Conta depositar(String numeroConta,BigDecimal saldo) {
+        Conta remetente = contaRepository.findByNumber(numeroConta);
+        remetente.setSaldo(remetente.getSaldo().add(saldo));
+        return contaRepository.save(remetente);
+    }
+
+
+
 
     public boolean existsByContaNumber(String number) {
         return contaRepository.existsByNumber(number);

@@ -32,7 +32,6 @@ classDiagram
   
  
   User "1" *-- "1" Conta
-  Conta "1" *-- "0..*" Movimentacao
 ```
 
 ## Documentação da API (Swagger)

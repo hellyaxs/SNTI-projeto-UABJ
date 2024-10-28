@@ -1,0 +1,27 @@
+name: Test Docker Build
+
+on:
+  push:
+    branches:
+      - main  # executa o build em pushes para a branch principal
+  pull_request:
+    branches:
+      - main  # executa o build em pull requests para a branch principal
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the code
+        uses: actions/checkout@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Build Docker image
+        run: docker build -t my-image:latest .
+
+      - name: Test Docker image
+        run: |
+          # Executa testes simples para verificar a imagem
+          docker run --rm my-image:latest  # Exemplo de teste

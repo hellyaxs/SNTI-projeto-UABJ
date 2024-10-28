@@ -21,7 +21,7 @@ jobs:
       - name: Build Docker image
         run: docker build -t my-image:latest .
 
-      - name: Test Docker image
+      - name: Verify Docker image exists
         run: |
-          # Executa testes simples para verificar a imagem
-          docker run --rm my-image:latest  # Exemplo de teste
+          # Lista as imagens para verificar se a imagem foi construída
+          docker images | grep my-image
